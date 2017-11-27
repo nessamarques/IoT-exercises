@@ -1,0 +1,49 @@
+Follow the leader game.
+Follow the leader is a game in which players take turns challenging the opponent to remember the sequence of musical notes that were produced so far. 
+As an example, lets assume there are two players: P1 and P2.
+
+- P1 produces note C (Dó, in Latin convention) . As a result, the sequence (initially empty) is increased to include note C, hence it is equal to [C]. 
+  Now it is P2's turn.
+- P2 produces note C to repeat the current existing sequence of notes and add an extra note to it. Lets assume he/she produced note F (Fá, in Latin convention) to increase the sequence. At the end of this turn, the sequence is equal to [C F]. Now it is P1's turn.
+- P1 produces note C and then note F to repeat the current sequence and add an extra note to the sequence. Lets say he/she produced the note F to expand the sequence. At the end of this turn, the sequence is [ C F F ]. Now it is P2's turn.
+- P2 produces note C and  then note C again. Notice that the sequence is incorrect (he/she was supposed to produce note C and then F). At this point, 
+  the system emits a sound indicating that the sequence is incorrect and reports that player P2 is out of the game. Since there is only one player left, he/she is declared the winner.
+ 
+The game system is composed by a set of hardware devices and a program. The hardware is composed by:
+
+1 Arduino Uno
+2 push buttons (Button A and Button B). Button A must be connected to Arduino pin 2 and button B must be connected to Arduino pin 3.
+1 buzzer connected to Arduino pin 8.
+1 serial cable connected to the host USB interface.
+ 
+The following flow must be implemented.
+
+[Reset]: Once the system resets, the game must print the message: "Welcome to the follow the leader game! Please enter the number of players: [2-9]" and go to step [# of players].
+
+[# of players]: The system must wait for a number (2-9) on the UART, which will specify the number of players. Once the user inserts the number on the terminal, the system reads it and set the number of players. After this step, the system must proceed to step [Round reset]
+
+[Rounds reset]: The system must reset the ROUND counter to 1, reset the list that records the sequence of notes and mark all players as active. After resetting the rounds, the system must proceed to the [Round start] step.
+
+[Round start]: The system must:
+Print "Round N", where N is the ROUND number;
+Set the current player to the first active player. Initially the first active player is player 1, however, in case player 1 has been eliminated from the game, the first active player should be the next active.
+Go to step [Round turn]
+
+[Round turn]: The system must:
+Print "Player P", where P is the identifier of the current player (eg. Player 1).
+The player will produce a sequence of N+1 notes by pressing buttons A and B. The system must read the sequence of notes and match the first N notes against the current sequence.
+In case there is a mismatch, the system emits a sound indicating the sequence is incorrect and prints the message: "Incorrect sequence! You have been eliminated. If the number of remaining active players is equal to 1, the system prints "Player W" won!", where W is the identification of the remaining 
+player.
+In case the user takes to long to press the button (more than 5 seconds between notes), the system prints "Time expired. You have been eliminated!". 
+If the number of remaining active players is equal to 1, the system prints "Player W" won!", where W is the identification of the remaining player.
+In case the sequence matches, the last note is added to the sequence.
+In case this was the last active player in this round, the system increases the ROUND counter and proceeds to step [Round start], otherwise, it updates 
+the current player as the next active player and goes to step [Round turn].
+ 
+Whenever the user press a button the system must emit a musical note. Button A should emit a Do (C) note while button B should emit a Fa (F) note.
+
+Submission rules:
+
+The program must be submitted through the Moodle system.
+The course work may be done in teams of 2 people.
+The program must be designed in C and compiled using the command line tools. You may not use third party code nor libraries.

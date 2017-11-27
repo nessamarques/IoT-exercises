@@ -1,0 +1,17 @@
+ls -- lista conteudo de um repositorio
+
+rm ibeacon_scan.sh -- remove o arquivo existente
+
+vi ibeacon_scan.sh -- cria/modifica o arquivo
+
+	esc + i -- permite escrever no arquivo (modo insert)
+	shift + fn + insert -- colar conteudo do ctrl + c
+	esc + :wq! -- salva o conteudo escrito no arquivo (written, quite, !)
+
+cat ibeacon_scan.sh -- le o conteudo do arquivo
+ls -la -- lista permissões
+
+chmod +x ibeacon_scan.sh -- da permissão de execução pro arquivo
+ls -la -- conferir se a permissão foi atribuida
+
+./ibeacon_scan.sh parse -- executa o script no diretório corrente
